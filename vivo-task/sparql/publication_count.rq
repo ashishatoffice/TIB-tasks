@@ -1,0 +1,25 @@
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX vivo:  <http://vivoweb.org/ontology/core#>
+PREFIX bibo:  <http://purl.org/ontology/bibo/>
+
+SELECT (?orgUnitName AS ?Organisation_Name)
+       (COUNT(DISTINCT ?publication) AS ?Publication_Count)
+WHERE {
+    ?orgUnit a vivo:AcademicDepartment ;
+             rdfs:label ?orgUnitName .
+
+    ?position vivo:relates ?orgUnit ;
+              vivo:relates ?person .
+    ?person a foaf:Person .
+
+    ?authorship a vivo:Authorship ;
+                vivo:relates ?person ;
+                vivo:relates ?publication .
+    ?publication a bibo:AcademicArticle ;
+                 vivo:dateTimeValue ?dtv .
+
+    ?dtv vivo:dateTime ?dateTime .
+    FILTER (YEAR(?dateTime) = 2026)
+}
+GROUP BY ?orgUnit ?orgUnitName

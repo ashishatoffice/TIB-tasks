@@ -1,0 +1,24 @@
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+PREFIX vivo:    <http://vivoweb.org/ontology/core#>
+PREFIX bibo:    <http://purl.org/ontology/bibo/>
+
+SELECT (COUNT(DISTINCT ?publication) AS ?Peer_Reviewed_Count)
+WHERE {
+    # Person identified by ORCID iD (IRI)
+    ?person a foaf:Person ;
+            vivo:orcidId <https://orcid.org/0000-0002-1825-0097> .
+
+    # Authorship
+    ?authorship a vivo:Authorship ;
+                vivo:relates ?person ;
+                vivo:relates ?publication .
+
+    # Peer-reviewed article in the given journal
+    ?publication a bibo:AcademicArticle ;
+                 bibo:status bibo:peerReviewed ;
+                 vivo:hasPublicationVenue ?venue .
+
+    ?venue a bibo:Journal ;
+           rdfs:label "Journal of Information Science" .
+}

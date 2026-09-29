@@ -1,0 +1,38 @@
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+PREFIX vivo:    <http://vivoweb.org/ontology/core#>
+PREFIX bibo:    <http://purl.org/ontology/bibo/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+SELECT ?Author
+       (STR(?orcid) AS ?ORCIDID)
+       ?Title ?DOI ?Year ?Status ?Venue
+WHERE {
+    # Person, identified by ORCID iD (an IRI in the corrected model)
+    ?person a foaf:Person ;
+            rdfs:label   ?Author ;
+            vivo:orcidId ?orcid .
+    FILTER (?orcid = <https://orcid.org/0000-0002-1825-0097>)
+
+    # Authorship (reified relationship)
+    ?authorship a vivo:Authorship ;
+                vivo:relates ?person ;
+                vivo:relates ?publication .
+    ?publication a bibo:AcademicArticle .
+
+    # Publication metadata
+    ?publication rdfs:label ?Title ;
+                 bibo:doi   ?DOI ;
+                 bibo:status ?Status ;
+                 vivo:hasPublicationVenue ?venue ;
+                 vivo:dateTimeValue ?dtv .
+
+    # Year from the DateTimeValue
+    ?dtv vivo:dateTime ?dateTime .
+    BIND (YEAR(?dateTime) AS ?Year)
+
+    # Venue
+    ?venue a bibo:Journal ;
+           rdfs:label ?Venue .
+}

@@ -1,0 +1,85 @@
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:       <http://xmlns.com/foaf/0.1/> .
+@prefix vivo:       <http://vivoweb.org/ontology/core#> .
+@prefix bibo:       <http://purl.org/ontology/bibo/> .
+@prefix dcterms:    <http://purl.org/dc/terms/> .
+@prefix org:        <http://www.w3.org/ns/org#> .
+@prefix ex:         <http://example.org/ns#> .
+@prefix ns:         <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix skos:       <http://www.w3.org/2004/02/skos/core#> .
+@prefix vitro:      <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
+@prefix skos2:      <http://www.w3.org/2008/05/skos#> .
+@prefix terms:      <http://purl.org/dc/terms/> .
+@prefix obo:        <http://purl.obolibrary.org/obo/> .
+@prefix vann:       <http://purl.org/vocab/vann/> .
+@prefix statistics: <http://purl.org/net/OCRe/statistics.owl#> .
+@prefix doap:       <http://usefulinc.com/ns/doap#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix obo:   <http://purl.obolibrary.org/obo/> .
+
+# Define the ontology and import VIVO core
+ex:myResearchModel a owl:Ontology ;
+    rdfs:label "Research Information Model" ;
+    owl:imports <http://vivoweb.org/ontology/core> .
+
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix obo:   <http://purl.obolibrary.org/obo/> .
+
+# Person
+ex:person_anna_mueller a foaf:Person, vivo:FacultyMember ;
+    rdfs:label "Dr. Anna Müller" ;
+    vivo:orcidId <https://orcid.org/0000-0002-1825-0097> ;
+    obo:ARG_2000028 ex:vcard_anna_mueller .
+
+ex:vcard_anna_mueller a vcard:Individual ;
+    vcard:hasName          ex:vcard_anna_mueller_name ;
+    vcard:hasFormattedName ex:vcard_anna_mueller_fn .
+
+ex:vcard_anna_mueller_name a vcard:Name ;
+    vcard:givenName  "Anna" ;
+    vcard:familyName "Müller" .
+
+ex:vcard_anna_mueller_fn a vcard:FormattedName ;
+    vcard:formattedName "Anna Müller" .
+
+# Organisation structure
+ex:org_university_technology a vivo:University ;
+    rdfs:label "University of Technology" ;
+    vivo:rorId "https://ror.org/012345678"^^xsd:anyURI .
+
+ex:org_unit_software_dev a vivo:AcademicDepartment ;
+    rdfs:label "Department of Software Development" ;
+    obo:BFO_0000050 ex:org_university_technology .      # part of
+
+# Affiliation as VIVO Position
+ex:position_anna_sd a vivo:FacultyPosition ;
+    rdfs:label "Faculty position, Dept. of Software Development" ;
+    vivo:relates ex:person_anna_mueller, ex:org_unit_software_dev .
+
+# Publication
+ex:pub_open_research a bibo:AcademicArticle ;
+    rdfs:label "Open Research Information in Practice" ;
+    dcterms:title "Open Research Information in Practice" ;
+    bibo:doi "10.1234/example.2026.001" ;
+    bibo:status bibo:peerReviewed ;
+    vivo:dateTimeValue ex:dtv_2026 ;
+    vivo:hasPublicationVenue ex:journal_jis ;
+    ex:openAccessRoute "Gold" .
+
+ex:dtv_2026 a vivo:DateTimeValue ;
+    vivo:dateTime "2026-01-01T00:00:00"^^xsd:dateTime ;
+    vivo:dateTimePrecision vivo:yearPrecision .
+
+ex:journal_jis a bibo:Journal ;
+    rdfs:label "Journal of Information Science" .
+
+bibo:peerReviewed a bibo:DocumentStatus .
+
+# Authorship
+ex:authorship_anna_pub a vivo:Authorship ;
+    vivo:relates ex:person_anna_mueller, ex:pub_open_research ;
+    vivo:rank 1 ;
+    vivo:isCorrespondingAuthor true .
