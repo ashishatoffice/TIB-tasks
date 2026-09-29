@@ -266,8 +266,8 @@ OPTIONAL {
 
 ```bat
 :: run the application and it will guide you through the loading ontology and executing the queries
-rdmQuery.exe 
-
+rdmQuery.exe
+``` 
 ## License
 
 Add a license file (for example `LICENSE`) before publishing. The VIVO Core Ontology is released under the [Unlicense](https://spdx.org/licenses/Unlicense.html).
