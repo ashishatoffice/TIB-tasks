@@ -244,6 +244,29 @@ OPTIONAL {
     ?uni rdfs:label ?University .
 }
 ```
+# rdmQuery.exe
+
+`rdmQuery.exe` is a standalone Windows command-line tool, written in Python, that loads RDF data and executes SPARQL queries against it. It lets you run the queries in this repository without installing a triple store or a Python environment.
+
+> **Draft note:** This page was written without access to the tool's source code. Options, output formats and defaults below are assumptions. Check each one against the actual behaviour (`rdmQuery.exe --help`) and correct where needed.
+
+## What it does
+
+- Loads one or more RDF files (Turtle `.ttl`, and other formats the tool supports) into an in-memory graph.
+- Loads and executes SPARQL query files (`.rq`) from a file or a folder.
+- Displays results as a table in the console and can export them to a file.
+- Runs offline. No server, database or internet connection is needed.
+
+## Requirements
+
+- Windows 10 or later (64-bit).
+- No Python installation needed. The interpreter and libraries are bundled in the executable.
+
+## Quick start
+
+```bat
+:: run the application and it will guide you through the loading ontology and executing the queries
+rdmQuery.exe 
 
 ## License
 
