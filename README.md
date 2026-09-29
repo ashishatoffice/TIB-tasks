@@ -12,6 +12,7 @@ An RDF/OWL model for researchers, their organisational affiliation and their sch
 - [Properties](#properties)
 - [Modelling decisions](#modelling-decisions)
 - [SPARQL queries](#sparql-queries)
+- [rdmQuery Application for executing the sparql queries](#rdmquery-application)
 
 ## Repository structure
 
@@ -244,7 +245,7 @@ OPTIONAL {
     ?uni rdfs:label ?University .
 }
 ```
-# rdmQuery.exe
+# rdmQuery Application
 
 `rdmQuery.exe` is a standalone Windows command-line tool, written in Python, that loads RDF data and executes SPARQL queries against it. It lets you run the queries in this repository without installing a triple store or a Python environment.
 
